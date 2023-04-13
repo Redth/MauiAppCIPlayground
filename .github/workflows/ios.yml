@@ -30,9 +30,6 @@ jobs:
     #  with:
     #    dotnet-version: 7.0.x
 
-    #- name: '🪄 Install .NET Workloads'
-    #  run: dotnet workload install maui ios maccatalyst macos tvos android
-
     - name: '🪄 Install AppleDev Tools'
       run: dotnet tool install -g AppleDev.Tools
 
@@ -44,8 +41,13 @@ jobs:
           --keychain-password ${{ secrets.TMP_KEYCHAIN_PWD }} `
           --certificate APPLE_DIST_CERT `
           --bundle-identifier ${{ env.APP_BUNDLE_ID }} `
+          --profile-type IOS_APP_ADHOC `
+          --profile-type IOS_APP_STORE
           --api-key-id ${{ secrets.APP_STORE_CONNECT_KEY_ID }} `
           --api-issuer-id ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+
+    - name: '🪄 Install .NET Workloads'
+      run: dotnet workload install maui ios maccatalyst macos tvos android
 
     - name: '⚒️ Build iOS'
       shell: pwsh
