@@ -14,7 +14,7 @@ jobs:
     env:
       ACTIONS_ALLOW_UNSECURE_COMMANDS: true
       APP_BUNDLE_ID: 'codes.redth.myamazingapp'
-      APP_PROJECT: './MyAmazingApp.csproj'
+      APP_PROJECT: './MyAmazingApp/MyAmazingApp.csproj'
       APP_PROFILE_TYPE: 'IOS_APP_ADHOC'
       APP_CODESIGN_PROVISION: 'Automatic:AdHoc'
       KEYCHAIN: job-${{ github.job }}-${{ github.run_id	}}-${{ github.run_number }}-${{ github.run_attempt }}
@@ -45,8 +45,7 @@ jobs:
           --certificate APPLE_DIST_CERT `
           --bundle-identifier ${{ env.APP_BUNDLE_ID }} `
           --api-key-id ${{ secrets.APP_STORE_CONNECT_KEY_ID }} `
-          --api-issuer-id ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }} `
-          --api-private-key APP_STORE_CONNECT_PRIVATE_KEY
+          --api-issuer-id ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
 
     - name: '⚒️ Build iOS'
       shell: pwsh
