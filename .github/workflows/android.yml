@@ -37,11 +37,11 @@ jobs:
           -p:Configuration=Release `
           -p:AndroidKeyStore=True `
           -p:AndroidSigningKeyStore=${{ env.ANDROID_KEYSTORE }} `
-          -p:AndroidSigningKeyAlias=key
+          -p:AndroidSigningKeyAlias=key `
           -p:AndroidSigningKeyPass='${{ secrets.ANDROID_KEYSTORE_PASS }}' `
           -p:AndroidSigningStorePass='${{ secrets.ANDROID_KEYSTORE_PASS }}' `
           -bl:android.binlog `
-          "${{ env.APP_PROJECT }}"
+          ${{ env.APP_PROJECT }}
 
     - name: '🪵 Artifacts: .apk'
       uses: actions/upload-artifact@v1
