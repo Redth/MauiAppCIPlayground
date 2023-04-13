@@ -17,7 +17,6 @@ jobs:
       APP_PROJECT: './MyAmazingApp/MyAmazingApp.csproj'
       APP_PROFILE_TYPE: 'IOS_APP_ADHOC'
       APP_CODESIGN_PROVISION: 'Automatic:AdHoc'
-      KEYCHAIN: job-${{ github.job }}-${{ github.run_id	}}-${{ github.run_number }}-${{ github.run_attempt }}
       APPLE_DIST_CERT: ${{ secrets.APPLE_DIST_CERT }}
       APP_STORE_CONNECT_PRIVATE_KEY: ${{ secrets.APP_STORE_CONNECT_PRIVATE_KEY }}
 
@@ -37,8 +36,6 @@ jobs:
       shell: pwsh
       run: |
         apple ci provision `
-          --keychain ${{ env.KEYCHAIN }} `
-          --keychain-password ${{ secrets.TMP_KEYCHAIN_PWD }} `
           --certificate APPLE_DIST_CERT `
           --bundle-identifier ${{ env.APP_BUNDLE_ID }} `
           --profile-type IOS_APP_ADHOC `
