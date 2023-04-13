@@ -1,0 +1,69 @@
+name: iOS
+
+on:
+  pull_request:
+  push:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    name: Build
+    runs-on: macos-latest
+    env:
+      ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+      APP_BUNDLE_ID: 'codes.redth.myamazingapp'
+      APP_PROJECT: './MyAmazingApp.csproj'
+      APP_PROFILE_TYPE: 'IOS_APP_ADHOC'
+      APP_CODESIGN_PROVISION: 'Automatic:AdHoc'
+      KEYCHAIN: job-${{ github.job }}-${{ github.run_id	}}-${{ github.run_number }}-${{ github.run_attempt }}
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Install .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 7.0.x
+
+    - name: Install .NET Workloads
+      run: dotnet workload install maui ios maccatalyst macos tvos android
+
+    - name: Install AppleDev Tools
+      run: dotnet tool install -g AppleDev.Tools
+
+    - name: Apple Provisioning
+      shell: pwsh
+      run: |
+        apple ci provision `
+          --keychain ${{ env.KEYCHAIN }} `
+          --keychain-password ${{ secrets.TMP_KEYCHAIN_PWD }} `
+          --certificate ${{ secrets.APPLE_DIST_CERT }} `
+          --certificate-passphrase ${{ secrets.APPLE_DIST_CERT_PASSPHRASE }} `
+          --bundle-identifier ${{ env.APP_BUNDLE_ID }} `
+          --api-key-id ${{ secrets.APP_STORE_CONNECT_KEY_ID }} `
+          --api-issuer-id ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }} `
+          --api-private-key ${{ secrets.APP_STORE_CONNECT_PRIVATE_KEY }}
+
+    - name: Build - iOS
+      shell: pwsh
+      run: |
+        dotnet publish `
+          -p:Configuration=Release `
+          -p:Platform=iPhone `
+          -p:BuildIpa=true `
+          -p:IpaIncludeArtwork=false `
+          -p:CodesignProvision='${{ env.APP_CODESIGN_PROVISION }}' `
+          -bl:ios.binlog `
+          "${{ env.APP_PROJECT }}"
+
+    - name: App.ipa
+      uses: actions/upload-artifact@v1
+      with:
+        name: NuGet
+        path: ./**/*.ipa
+
+    - name: Binlogs
+      uses: actions/upload-artifact@v1
+      with:
+        name: NuGet
+        path: ./**/*.binlog
