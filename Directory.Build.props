@@ -1,0 +1,35 @@
+<Project>
+    <ItemGroup>
+        <PackageReference Include="GitInfo" Version="3.0.5" PrivateAssets="all" />
+    </ItemGroup>
+    <PropertyGroup>
+    </PropertyGroup>
+
+    <!-- Just a helper to show what some verison calculations might look like -->
+    <Target DependsOnTargets="GitInfoReport" Name="AppVersionReport">
+        
+        <Message Importance="high" Text="App Version Info:
+            ApplicationDisplayVersion:       $(GitSemVerMajor).$(GitSemVerMinor).$(GitSemVerPatch)
+            ApplicationVersion:              $(GitSemVerMajor)$(GitSemVerMinor)$(GitSemVerPatch.PadLeft(4, '0'))
+            GitRepositoryUrl      $(GitRepositoryUrl)
+            GitBranch:            $(GitBranch)
+            GitCommit:            $(GitCommit)
+            GitSha:               $(GitSha)
+            GitCommitDate:        $(GitCommitDate)
+            GitBaseVersion:       $(GitBaseVersion)
+            GitBaseVersionSource: $(GitBaseVersionSource)
+            GitBaseVersionMajor:  $(GitBaseVersionMajor)
+            GitBaseVersionMinor:  $(GitBaseVersionMinor)
+            GitBaseVersionPatch:  $(GitBaseVersionPatch)
+            GitCommits:           $(GitCommits)
+            GitTag:               $(GitTag)
+            GitBaseTag:           $(GitBaseTag)
+            GitSemVerMajor:       $(GitSemVerMajor)
+            GitSemVerMinor:       $(GitSemVerMinor)
+            GitSemVerPatch:       $(GitSemVerPatch)
+            GitSemVerLabel:       $(GitSemVerLabel)
+            GitSemVerDashLabel:   $(GitSemVerDashLabel)
+            GitSemVerSource:      $(GitSemVerSource)
+            "/>
+    </Target>
+</Project>

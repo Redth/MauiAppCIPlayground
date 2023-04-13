@@ -15,12 +15,15 @@
 		<ApplicationTitle>MyAmazingApp</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.myamazingapp</ApplicationId>
+		<ApplicationId>codes.redth.myamazingapp</ApplicationId>
 		<ApplicationIdGuid>d148b4c4-062f-4833-801a-f716922d22b3</ApplicationIdGuid>
 
 		<!-- Versions -->
-		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
-		<ApplicationVersion>1</ApplicationVersion>
+		<!-- Build our display version from GitInfo's Semver -->
+		<ApplicationDisplayVersion>$(GitSemVerMajor).$(GitSemVerMinor).$(GitSemVerPatch)</ApplicationDisplayVersion>
+
+		<!-- For the actual version, we'll want more digits to increment for builds, so pad the integer of the patch version a bit -->
+		<ApplicationVersion>$(GitSemVerMajor)$(GitSemVerMinor)$(GitSemVerPatch.PadLeft(4, '0'))</ApplicationVersion>
 
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">11.0</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">13.1</SupportedOSPlatformVersion>
