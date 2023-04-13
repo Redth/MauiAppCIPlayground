@@ -31,12 +31,13 @@ jobs:
     - name: '⚒️ Build Android'
       shell: pwsh
       run: |
-        [IO.File]::WriteAllBytes("$env:GITHUB_WORKSPACE/app.keystore",	([convert]::FromBase64String("${{ secrets.ANDROID_KEYSTORE }}")) )  
+        [IO.File]::WriteAllBytes("$env:GITHUB_WORKSPACE/MyAmazingApp/app.keystore",	([convert]::FromBase64String("${{ secrets.ANDROID_KEYSTORE }}")) )  
+
         dotnet publish `
           -f net7.0-android `
           -p:Configuration=Release `
           -p:AndroidKeyStore=True `
-          -p:AndroidSigningKeyStore=${{ env.GITHUB_WORKSPACE }}/app.keystore `
+          -p:AndroidSigningKeyStore=app.keystore `
           -p:AndroidSigningKeyAlias=key `
           -p:AndroidSigningKeyPass='${{ secrets.ANDROID_KEYSTORE_PASS }}' `
           -p:AndroidSigningStorePass='${{ secrets.ANDROID_KEYSTORE_PASS }}' `
