@@ -25,10 +25,10 @@ jobs:
     #  with:
     #    dotnet-version: 7.0.x
 
-    - name: '🪄 Install .NET Workloads'
+    - name: '🪄 Install: .NET Workloads'
       run: dotnet workload install maui ios maccatalyst macos tvos android
 
-    - name: '⚒️ Build Android'
+    - name: '⚒️ Build: Android'
       shell: pwsh
       run: |
         [IO.File]::WriteAllBytes("$env:GITHUB_WORKSPACE/MyAmazingApp/app.keystore",	([convert]::FromBase64String("${{ secrets.ANDROID_KEYSTORE }}")) )  
@@ -45,19 +45,19 @@ jobs:
           ${{ env.APP_PROJECT }}
 
     - name: '🪵 Artifacts: .apk'
-      uses: actions/upload-artifact@v1
+      uses: actions/upload-artifact@v3
       with:
         name: App.apk
         path: ./**/*.apk
 
-    - name: '🪵 Artifacts: .apk'
-      uses: actions/upload-artifact@v1
+    - name: '🪵 Artifacts: .aab'
+      uses: actions/upload-artifact@v3
       with:
         name: App.aab
         path: ./**/*.aab
 
     - name: '🪵 Artifacts: .binlog'
-      uses: actions/upload-artifact@v1
+      uses: actions/upload-artifact@v3
       with:
         name: Binlogs
         path: ./**/*.binlog
