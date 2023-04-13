@@ -36,7 +36,7 @@ jobs:
           -f net7.0-android `
           -p:Configuration=Release `
           -p:AndroidKeyStore=True `
-          -p:AndroidSigningKeyStore=${{ my.keystore }} `
+          -p:AndroidSigningKeyStore=${{ env.ANDROID_KEYSTORE }} `
           -p:AndroidSigningKeyAlias=key
           -p:AndroidSigningKeyPass='${{ secrets.ANDROID_KEYSTORE_PASS }}' `
           -p:AndroidSigningStorePass='${{ secrets.ANDROID_KEYSTORE_PASS }}' `
