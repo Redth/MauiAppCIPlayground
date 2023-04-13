@@ -19,7 +19,7 @@ jobs:
       APP_CODESIGN_PROVISION: 'Automatic:AdHoc'
       KEYCHAIN: job-${{ github.job }}-${{ github.run_id	}}-${{ github.run_number }}-${{ github.run_attempt }}
       APPLE_DIST_CERT: ${{ secrets.APPLE_DIST_CERT }}
-      APP_STORE_PRIVATE_KEY: ${{ secrets.APP_STORE_CONNECT_PRIVATE_KEY }}
+      APP_STORE_CONNECT_PRIVATE_KEY: ${{ secrets.APP_STORE_CONNECT_PRIVATE_KEY }}
 
     steps:
     - name: '🛒 Checkout'
