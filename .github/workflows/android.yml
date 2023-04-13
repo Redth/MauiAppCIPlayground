@@ -1,0 +1,62 @@
+name: Android
+
+on:
+  pull_request:
+  push:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    name: Android
+    runs-on: macos-latest
+
+    env:
+      ACTIONS_ALLOW_UNSECURE_COMMANDS: true
+      APP_BUNDLE_ID: 'codes.redth.myamazingapp'
+      APP_PROJECT: './MyAmazingApp/MyAmazingApp.csproj'
+      ANDROID_KEYSTORE: ${{ secrets.ANDROID_KEYSTORE }}
+
+    steps:
+    - name: '🛒 Checkout'
+      uses: actions/checkout@v2
+
+    #- name: '🪄 Install .NET'
+    #  uses: actions/setup-dotnet@v3
+    #  with:
+    #    dotnet-version: 7.0.x
+
+    - name: '🪄 Install .NET Workloads'
+      run: dotnet workload install maui ios maccatalyst macos tvos android
+
+    - name: '⚒️ Build Android'
+      shell: pwsh
+      run: |
+        dotnet publish `
+          -f net7.0-android `
+          -p:Configuration=Release `
+          -p:AndroidKeyStore=True `
+          -p:AndroidSigningKeyStore=${{ my.keystore }} `
+          -p:AndroidSigningKeyAlias=key
+          -p:AndroidSigningKeyPass='${{ secrets.ANDROID_KEYSTORE_PASS }}' `
+          -p:AndroidSigningStorePass='${{ secrets.ANDROID_KEYSTORE_PASS }}' `
+          -bl:android.binlog `
+          "${{ env.APP_PROJECT }}"
+
+    - name: '🪵 Artifacts: .apk'
+      uses: actions/upload-artifact@v1
+      with:
+        name: App.apk
+        path: ./**/*.apk
+
+    - name: '🪵 Artifacts: .apk'
+      uses: actions/upload-artifact@v1
+      with:
+        name: App.aab
+        path: ./**/*.aab
+
+    - name: '🪵 Artifacts: .binlog'
+      uses: actions/upload-artifact@v1
+      with:
+        name: Binlogs
+        path: ./**/*.binlog
