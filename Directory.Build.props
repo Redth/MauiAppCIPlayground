@@ -1,4 +1,4 @@
-<Project>
+<!-- <Project>
     <ItemGroup>
         <PackageReference Include="GitInfo" Version="2.3.0" PrivateAssets="all" />
     </ItemGroup>
@@ -32,4 +32,4 @@
             GitSemVerSource:      $(GitSemVerSource)
             "/>
     </Target>
-</Project>
+</Project> -->

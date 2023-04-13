@@ -20,10 +20,12 @@
 
 		<!-- Versions -->
 		<!-- Build our display version from GitInfo's Semver -->
-		<ApplicationDisplayVersion>$(GitSemVerMajor).$(GitSemVerMinor).$(GitSemVerPatch)</ApplicationDisplayVersion>
+		<!-- <ApplicationDisplayVersion>$(GitSemVerMajor).$(GitSemVerMinor).$(GitSemVerPatch)</ApplicationDisplayVersion> -->
+		<ApplicationDisplayVersion>1.2.3</ApplicationDisplayVersion>
 
 		<!-- For the actual version, we'll want more digits to increment for builds, so pad the integer of the patch version a bit -->
-		<ApplicationVersion>$(GitSemVerMajor)$(GitSemVerMinor)$(GitSemVerPatch.PadLeft(4, '0'))</ApplicationVersion>
+		<!-- <ApplicationVersion>$(GitSemVerMajor)$(GitSemVerMinor)$(GitSemVerPatch.PadLeft(4, '0'))</ApplicationVersion> -->
+		<ApplicationVersion>120003</ApplicationVersion>
 
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">11.0</SupportedOSPlatformVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">13.1</SupportedOSPlatformVersion>
