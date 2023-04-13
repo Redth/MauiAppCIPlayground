@@ -53,10 +53,10 @@ jobs:
       shell: pwsh
       run: |
         dotnet publish `
+          -f net7.0-ios `
           -p:Configuration=Release `
-          -p:Platform=iPhone `
-          -p:BuildIpa=true `
-          -p:IpaIncludeArtwork=false `
+          -p:RuntimeIdentifier=ios-arm64 `
+          -p:ArchiveOnBuild=true `
           -p:CodesignProvision='${{ env.APP_CODESIGN_PROVISION }}' `
           -bl:ios.binlog `
           "${{ env.APP_PROJECT }}"
