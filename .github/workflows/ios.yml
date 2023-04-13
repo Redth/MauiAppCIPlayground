@@ -58,6 +58,7 @@ jobs:
           -p:RuntimeIdentifier=ios-arm64 `
           -p:ArchiveOnBuild=true `
           -p:CodesignProvision='${{ env.APP_CODESIGN_PROVISION }}' `
+          -p:CodesignKey='${{ secrets.APPLE_DIST_CERT_NAME }}' `
           -bl:ios.binlog `
           "${{ env.APP_PROJECT }}"
 
