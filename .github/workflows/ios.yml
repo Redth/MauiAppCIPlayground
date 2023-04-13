@@ -42,7 +42,7 @@ jobs:
           --certificate APPLE_DIST_CERT `
           --bundle-identifier ${{ env.APP_BUNDLE_ID }} `
           --profile-type IOS_APP_ADHOC `
-          --profile-type IOS_APP_STORE
+          --profile-type IOS_APP_STORE `
           --api-key-id ${{ secrets.APP_STORE_CONNECT_KEY_ID }} `
           --api-issuer-id ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
 
