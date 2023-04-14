@@ -12,9 +12,7 @@ jobs:
     runs-on: macos-latest
 
     env:
-      ACTIONS_ALLOW_UNSECURE_COMMANDS: true
-      APP_BUNDLE_ID: 'codes.redth.myamazingapp'
-      APP_PROJECT: './MyAmazingApp/MyAmazingApp.csproj'
+      ANDROID_KEYSTORE: ${{ secrets.ANDROID_KEYSTORE }}
 
     steps:
     - name: '🛒 Checkout'
@@ -33,7 +31,7 @@ jobs:
 
     - name: '🪄 Install: Keystore File'
       shell: pwsh
-      run: apple ci base64-to-file --base64 "${{ secrets.ANDROID_KEYSTORE }}" --output-file "${{ env.GITHUB_WORKSPACE }}/app.keystore"
+      run: apple ci base64-to-file --base64 ANDROID_KEYSTORE --output-file "./app.keystore"
 
     - name: '⚒️ Build: Android'
       shell: pwsh
@@ -42,12 +40,12 @@ jobs:
           -f net7.0-android `
           -p:Configuration=Release `
           -p:AndroidKeyStore=True `
-          -p:AndroidSigningKeyStore=app.keystore `
+          -p:AndroidSigningKeyStore=./app.keystore `
           -p:AndroidSigningKeyAlias=key `
           -p:AndroidSigningKeyPass='${{ secrets.ANDROID_KEYSTORE_PASS }}' `
           -p:AndroidSigningStorePass='${{ secrets.ANDROID_KEYSTORE_PASS }}' `
           -bl:android.binlog `
-          ${{ env.APP_PROJECT }}
+          ./MyAmazingApp/MyAmazingApp.csproj
 
     - name: '🪵 Artifacts: .apk'
       uses: actions/upload-artifact@v3
