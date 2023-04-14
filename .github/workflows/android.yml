@@ -25,15 +25,20 @@ jobs:
     #  with:
     #    dotnet-version: 7.0.x
 
+    - name: '🪄 Install: AppleDev Tools'
+      run: dotnet tool install -g AppleDev.Tools
+
     - name: '🪄 Install: .NET Workloads'
       run: dotnet workload install maui android
+
+    - name: '🪄 Install: Keystore File'
+      shell: pwsh
+      run: apple ci base64-to-file --base64 "${{ secrets.ANDROID_KEYSTORE }}" --output-file "${{ env.GITHUB_WORKSPACE }}/app.keystore"
 
     - name: '⚒️ Build: Android'
       shell: pwsh
       run: |
-        [IO.File]::WriteAllBytes("$env:GITHUB_WORKSPACE/MyAmazingApp/app.keystore",	([convert]::FromBase64String("${{ secrets.ANDROID_KEYSTORE }}")) )  
-
-        dotnet publish `
+         dotnet publish `
           -f net7.0-android `
           -p:Configuration=Release `
           -p:AndroidKeyStore=True `
