@@ -33,7 +33,6 @@ jobs:
       uses: maui-actions/apple-provisioning@2fe8575f369341e383965ae92655031dac7ca4b0
       with:
         certificate: APPLE_DIST_CERT
-        bundle-identifiers: ${{ env.APP_BUNDLE_ID }}
         app-store-connect-key-id: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
         app-store-connect-issuer-id: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
 
