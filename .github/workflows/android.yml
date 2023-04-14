@@ -23,7 +23,7 @@ jobs:
 
     - name: '🪄 Install: Keystore File'
       shell: pwsh
-      run: apple ci env-to-file --decode-base64 --env-var ANDROID_KEYSTORE --output-file "${{ env.GITHUB_WORKSPACE}}/app.keystore"
+      run: apple ci env-to-file --decode-base64 --env-var ANDROID_KEYSTORE --output-file "${{ github.workspace }}/app.keystore"
 
     - name: '🪄 Install: .NET Workloads'
       run: dotnet workload install maui android
@@ -35,7 +35,7 @@ jobs:
           -f net7.0-android `
           -p:Configuration=Release `
           -p:AndroidKeyStore=True `
-          -p:AndroidSigningKeyStore=${{ env.GITHUB_WORKSPACE}}/app.keystore `
+          -p:AndroidSigningKeyStore=${{ github.workspace }}/app.keystore `
           -p:AndroidSigningKeyAlias=key `
           -p:AndroidSigningKeyPass='${{ secrets.ANDROID_KEYSTORE_PASS }}' `
           -p:AndroidSigningStorePass='${{ secrets.ANDROID_KEYSTORE_PASS }}' `
