@@ -18,20 +18,15 @@ jobs:
     - name: '🛒 Checkout'
       uses: actions/checkout@v2
 
-    #- name: '🪄 Install .NET'
-    #  uses: actions/setup-dotnet@v3
-    #  with:
-    #    dotnet-version: 7.0.x
-
     - name: '🪄 Install: AppleDev Tools'
       run: dotnet tool install -g AppleDev.Tools
-
-    - name: '🪄 Install: .NET Workloads'
-      run: dotnet workload install maui android
 
     - name: '🪄 Install: Keystore File'
       shell: pwsh
       run: apple ci base64-to-file --base64 ANDROID_KEYSTORE --output-file "./app.keystore"
+
+    - name: '🪄 Install: .NET Workloads'
+      run: dotnet workload install maui android
 
     - name: '⚒️ Build: Android'
       shell: pwsh
