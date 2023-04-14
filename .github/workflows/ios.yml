@@ -19,7 +19,6 @@ jobs:
       APP_CODESIGN_PROVISION: 'Automatic:AdHoc'
       APPLE_DIST_CERT: ${{ secrets.APPLE_DIST_CERT }}
       APP_STORE_CONNECT_PRIVATE_KEY: ${{ secrets.APP_STORE_CONNECT_PRIVATE_KEY }}
-      KEYCHAIN: job-${{ github.job }}-${{ github.run_id	}}-${{ github.run_number }}-${{ github.run_attempt }}
 
     steps:
     - name: '🛒 Checkout'
@@ -30,22 +29,28 @@ jobs:
     #  with:
     #    dotnet-version: 7.0.x
 
-    - name: '🪄 Install: AppleDev Tools'
-      run: dotnet tool install -g AppleDev.Tools
-
     - name: '🪄 Install: Apple Certificates & Profiles'
-      shell: pwsh
-      run: |
-        apple ci provision `
-          --keychain ${{ env.KEYCHAIN }} `
-          --keychain-password ${{ secrets.TMP_KEYCHAIN_PWD }} `
-          --keychain-allow-any-app-read `
-          --certificate APPLE_DIST_CERT `
-          --bundle-identifier ${{ env.APP_BUNDLE_ID }} `
-          --profile-type IOS_APP_ADHOC `
-          --profile-type IOS_APP_STORE `
-          --api-key-id ${{ secrets.APP_STORE_CONNECT_KEY_ID }} `
-          --api-issuer-id ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+      uses: maui-actions/apple-provisioning@d95f65f
+      with:
+        certificate: APPLE_DIST_CERT
+        bundle-identifier: ${{ env.APP_BUNDLE_ID }}
+        profile-type: IOS_APP_ADHOC
+        app-store-connect-key-id: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
+        app-store-connect-issuer-id: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+
+    # - name: '🪄 Install: AppleDev Tools'
+    #   run: dotnet tool install -g AppleDev.Tools
+
+    # - name: '🪄 Install: Apple Certificates & Profiles'
+    #   shell: pwsh
+    #   run: |
+    #     apple ci provision `
+    #       --certificate APPLE_DIST_CERT `
+    #       --bundle-identifier ${{ env.APP_BUNDLE_ID }} `
+    #       --profile-type IOS_APP_ADHOC `
+    #       --profile-type IOS_APP_STORE `
+    #       --api-key-id ${{ secrets.APP_STORE_CONNECT_KEY_ID }} `
+    #       --api-issuer-id ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
 
     - name: '🪄 Install: .NET Workloads'
       run: dotnet workload install maui ios maccatalyst macos tvos android
