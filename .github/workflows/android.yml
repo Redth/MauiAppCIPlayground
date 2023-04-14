@@ -16,14 +16,14 @@ jobs:
 
     steps:
     - name: '🛒 Checkout'
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
     - name: '🪄 Install: AppleDev Tools'
       run: dotnet tool install -g AppleDev.Tools
 
     - name: '🪄 Install: Keystore File'
       shell: pwsh
-      run: apple ci base64-to-file --base64 ANDROID_KEYSTORE --output-file "./app.keystore"
+      run: apple ci env-to-file --decode-base64 --env-var ANDROID_KEYSTORE --output-file ./app.keystore
 
     - name: '🪄 Install: .NET Workloads'
       run: dotnet workload install maui android
