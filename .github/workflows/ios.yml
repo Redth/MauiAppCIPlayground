@@ -30,7 +30,7 @@ jobs:
     #    dotnet-version: 7.0.x
 
     - name: '🪄 Install: Apple Certificates & Profiles'
-      uses: maui-actions/apple-provisioning@019b8f6338ba8d2b4b65c8debeaf37f81070e603
+      uses: maui-actions/apple-provisioning@fbca16b0ccec48e89d20686aef29a25351c7223c
       with:
         certificate: APPLE_DIST_CERT
         bundle-identifiers: ${{ env.APP_BUNDLE_ID }}
