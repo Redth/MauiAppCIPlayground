@@ -22,7 +22,7 @@ jobs:
       uses: actions/checkout@v2
 
     - name: '🪄 Install: Apple Certificates & Profiles'
-      uses: maui-actions/apple-provisioning@6ce8b1602c62f0d54105fd71174007d13375f377
+      uses: maui-actions/apple-provisioning@f491309b6a201d3c249e2084755cc4e74bdac40d
       with:
         certificate: APPLE_CERTIFICATE
         bundle-identifiers: 'codes.redth.myamazingapp'
