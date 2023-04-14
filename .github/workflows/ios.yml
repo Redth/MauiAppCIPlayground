@@ -18,6 +18,8 @@ jobs:
       APP_PROFILE_TYPE: 'IOS_APP_ADHOC'
       APP_CODESIGN_PROVISION: 'Automatic:AdHoc'
       APPLE_DIST_CERT: ${{ secrets.APPLE_DIST_CERT }}
+      APP_STORE_CONNECT_KEY_ID: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
+      APP_STORE_CONNECT_ISSUER_ID: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
       APP_STORE_CONNECT_PRIVATE_KEY: ${{ secrets.APP_STORE_CONNECT_PRIVATE_KEY }}
 
     steps:
@@ -33,8 +35,8 @@ jobs:
       uses: maui-actions/apple-provisioning@2fe8575f369341e383965ae92655031dac7ca4b0
       with:
         certificate: APPLE_DIST_CERT
-        app-store-connect-key-id: ${{ secrets.APP_STORE_CONNECT_KEY_ID }}
-        app-store-connect-issuer-id: ${{ secrets.APP_STORE_CONNECT_ISSUER_ID }}
+        bundle-identifiers: ${{ env.APP_BUNDLE_ID }}
+        profile-types: IOS_APP_ADHOC
 
     # - name: '🪄 Install: AppleDev Tools'
     #   run: dotnet tool install -g AppleDev.Tools
