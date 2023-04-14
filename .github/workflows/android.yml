@@ -26,7 +26,7 @@ jobs:
     #    dotnet-version: 7.0.x
 
     - name: '🪄 Install: .NET Workloads'
-      run: dotnet workload install maui ios maccatalyst macos tvos android
+      run: dotnet workload install maui android
 
     - name: '⚒️ Build: Android'
       shell: pwsh
