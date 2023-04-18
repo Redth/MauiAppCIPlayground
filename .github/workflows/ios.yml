@@ -29,7 +29,7 @@ jobs:
         profile-types: 'IOS_APP_ADHOC,IOS_APP_STORE'
 
     - name: '🪄 Install: .NET Workloads'
-      run: dotnet workload install maui ios maccatalyst macos tvos android
+      run: dotnet workload install maui-ios
 
     - name: '⚒️ Build: iOS'
       shell: pwsh
